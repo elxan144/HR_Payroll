@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Employee_Branch_position_SalaryModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <table class="table text-white">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Sirket</th>
+                        <th>Vezife</th>
+                        <th>Maas</th>
+                        <th>Yekun Maas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.E_name</td>
+                            <td>@item.E_surname</td>
+                            <td>@item.BranchName</td>
+                            <td>@item.PositionName</td>
+                            <td>@item.Salary</td>
+                            <td class="totalSalary">@item.TotalSalary</td>
+                            <td>
+                                <input type="checkbox" class="checkVal" value="@item.E_Id" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+                <button class="btnCalc" name="selected">Calc</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(".btnCalc").click(function () {
+
+            var myCheckboxes = new Array();
+            $(".checkVal:checked").each(function () {
+                $(this).parent().prev().attr("data-employeeid", $(this).val());
+                myCheckboxes.push($(this).val());
+            });
+            $.ajax
+                (
+                {
+                    url: "/Payroll/Calculate",
+                    type: "POST",
+                        data: { 'id': myCheckboxes },
+                        success: function (data) {
+
+                            $(".col-lg-12").html(data);
+                            
+                            //$(".totalSalary").each(function () {
+
+                            //    if ($(this).next().children().is(':checked')) {
+                            //        $.each(data, function (item, key) {
+                            //            alert(key);
+                            //            //if ($(".totalSalary").data("employeeid") == key) {
+                            //            //    alert($(".totalSalary").data("employeeid"));
+                            //            //    $(".totalSalary").text(item);
+                            //            //}
+                            //        });                                    
+                            //    }
+                            //});
+
+                            //if ($(this).next().children())
+                                //    alert($(this).data("employeeid"));
+
+
+                                //$(".totalSalary").data("emplyeeid")
+                           
+                            //data.forEach(function (item) {
+                                   
+                            //});           
+                    }
+                }
+                )
+        })
+
+    </script>
+
+}

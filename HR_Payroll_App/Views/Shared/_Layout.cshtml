@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/reset.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans&display=swap" rel="stylesheet">
+    <link href="~/css/main.css" rel="stylesheet" />
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <a class="navbar-brand text-light " href="#">HrPayroll</a>
+            <div class="collapse navbar-collapse d-flex justify-content-end mr-5" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item mr-5">
+                        <p class="" href="#" style="color:white;">@User.Identity.Name</p>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <li class="nav-item mr-5">
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input type="submit" value="Cixis" style="background-color:transparent; border:none;  color:white;" />
+                        </form>
+                    </li>
+                    }
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section id="conten">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="sidebar">
+                    <ul>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><span class="far fa-building"></span> <a asp-action="Create" asp-controller="Holding">Holding</a></li>
+                            <li><span class="far fa-building"></span> <a asp-action="List" asp-controller="Company">Sirket</a></li>
+                            <li><span class="fas fa-archway"></span> <a asp-action="Create" asp-controller="Branch">Filial</a></li>
+                            <li><span class="fas fa-archive"></span><a asp-action="Create" asp-controller="Department">Departament elave et</a></li>
+                            <li><span class="fas fa-archive"></span> <a asp-action="AddDepartment" asp-controller="Admin">Sirkete departament elave et</a></li>
+                            <li><span class="fas fa-briefcase"></span> <a asp-action="Create" asp-controller="Position">Vezife elave et</a> </li>
+                            <li><span class="fas fa-money-check-alt"></span> <a asp-action="Create" asp-controller="Salary">Maas</a></li>
+                            <li><span class="fas fa-money-check-alt"></span> <a asp-action="AddEmployee" asp-controller="Admin">Isci elave et</a></li>
+                            <li><span class="fas fa-money-check-alt"></span> <a asp-action="Register" asp-controller="Account">Isciye role ver</a></li>
+                        }
+                        else if (User.IsInRole("HR"))
+                        {
+                            <li><span class="far fa-building"></span> <a asp-action="List" asp-controller="Attendance">Qayib yaz</a></li>
+                            <li><span class="far fa-building"></span> <a asp-action="List" asp-controller="Employee">Isciler</a></li>
+                            <li><span class="fas fa-money-check-alt"></span> <a asp-action="List" asp-controller="Payroll">Isciye maas hesabla</a></li>
+
+                        }
+                        else if (User.IsInRole("DepartmentHead"))
+                        {
+                            <li><span class="far fa-building"></span> <a asp-action="List" asp-controller="Incentive">Bonus ve Cerime</a></li>
+                        }
+                        else if (User.IsInRole("PayrollSpecialist"))
+                        {
+                            <li><span class="far fa-building"></span> <a asp-action="List" asp-controller="Payroll">Maas Hesabla</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

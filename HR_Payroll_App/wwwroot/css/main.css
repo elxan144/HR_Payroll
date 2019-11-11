@@ -1,0 +1,484 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+.sidebar {
+    background-color: #16191c;
+    border-right: 1px solid #2e3840;
+    bottom: 0;
+    position: fixed;
+    top: 50px;
+    width: 17%;
+    transition: all 0.2s ease-in-out 0s;
+    z-index: 1;
+}
+
+    .sidebar ul li {
+        width: 100%;
+        padding: 20px;
+    }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #a4abb5;
+            font-size: 14px;
+        }
+
+        .sidebar ul li span {
+            color: #a4abb5;
+            margin-right: 15px;
+        }
+
+
+
+#conten {
+    background-color: #23272b;
+    width: 100%;
+    min-height: 1000px;
+    margin-top: 30px;
+    padding-top: 30px;
+    overflow: hidden;
+}
+
+.content {
+    background-color: #23272b;
+    height: auto;
+    color: aliceblue;
+}
+
+.addEmployee {
+    width: 155px;
+    padding: 10px;
+    background-color: darkorange;
+    border: none;
+    border-radius: 45px;
+    color: white;
+    font-size: 19px;
+}
+
+.employee {
+    background-color: #16191c;
+    width: 100%;
+    height: 170px;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    overflow: hidden;
+}
+
+.employee_image {
+    width: 75px;
+    height: 75px;
+    background-color: white;
+    border-radius: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+    .employee_image img {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+    }
+
+.employee_Name input {
+    background-color: transparent;
+    border: none;
+    color: #b0b4b9;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.employee_list_add {
+    padding-left: 15px;
+}
+
+    .employee_list_add h1 {
+        font-size: 25px;
+        color: #b0b4b9;
+    }
+
+.search_employe {
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+
+    .search_employe input {
+        border: 1px solid #47505f;
+        padding: 12px;
+        border-radius: 5px;
+        background-color: #2e3439;
+        margin-left: 10px;
+        width: 100%;
+    }
+
+    .search_employe .btnSearch {
+        background-color: #55ce63;
+        color: white;
+    }
+
+    .search_employe select {
+        border: 1px solid #47505f;
+        border-radius: 5px;
+        background-color: #2e3439;
+        margin-left: 10px;
+        width: 100%;
+    }
+
+
+
+
+.profile_employee {
+    background-color: #16191c;
+    color: #bbc4cc;
+    width: 100%;
+    height: 200px;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    padding-top: 25px;
+    padding-left: 30px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.profile_image {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.profile_employee img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+.profile_employee ul > li {
+    text-decoration: none;
+    list-style: none;
+}
+
+
+.workplace {
+    background-color: #16191c;
+    width: 100%;
+    height: auto;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.Workplace_create {
+    display: none;
+    color: #bbc4cc;
+}
+
+    .Workplace_create select {
+        background-color: transparent;
+        border: 1px solid #2e3840;
+    }
+
+
+    .Workplace_create input {
+        background-color: transparent;
+        border: 1px solid #2e3840;
+    }
+
+.createWorkPlace {
+    border: 1px solid gray;
+    background-color: transparent;
+    color: #bbc4cc;
+    padding: 5px;
+    border-radius: 100%;
+}
+
+    .createWorkPlace:hover {
+        border: 1px solid #ff9b44;
+    }
+
+    .createWorkPlace:focus {
+        outline: none;
+    }
+
+.workplace_List {
+    border-bottom: 1px solid gray;
+    font-family: 'Open Sans', sans-serif;
+}
+
+    .workplace_List table {
+        font-size: 11px;
+        font-weight: 600;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+        .workplace_List table td {
+            padding-bottom: 0px;
+            font-family: 'Open Sans', sans-serif;
+            vertical-align: middle;
+        }
+
+
+
+.edit_workplace {
+    border: 1px solid #808080;
+    border-radius: 100%;
+    padding: 5px;
+    background-color: transparent;
+    color: aliceblue;
+}
+
+    .edit_workplace:hover {
+        border: 1px solid #ff9b44;
+    }
+
+    .edit_workplace:focus {
+        outline: none;
+    }
+
+.Workplace_edit select {
+    background-color: transparent;
+    border: 1px solid #2e3840;
+}
+
+/*.Workplace_edit input {
+    background-color: transparent;
+    border: 1px solid #2e3840;
+}*/
+
+
+.Workplace_edit {
+    display: none;
+    color: #bbc4cc;
+}
+
+
+
+.Oldworkplace {
+    background-color: #16191c;
+    width: 100%;
+    height: auto;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.OldWorkplace_create {
+    display: none;
+    color: #bbc4cc;
+}
+
+    .OldWorkplace_create input {
+        background-color: transparent;
+        border: 1px solid #2e3840;
+    }
+
+
+.createOldWorkPlace {
+    border: 1px solid gray;
+    background-color: transparent;
+    color: #bbc4cc;
+    padding: 5px;
+    border-radius: 100%;
+}
+
+    .createOldWorkPlace:focus {
+        outline: none;
+    }
+
+    .createOldWorkPlace:hover {
+        border: 1px solid #ff9b44;
+    }
+
+
+.Oldworkplace_List {
+    border-bottom: 1px solid gray;
+}
+
+    .Oldworkplace_List table {
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+/*------------------------------------------Attendance View List-----------------------------------------------*/
+
+.Attendance_employeeList {
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+    .Attendance_employeeList table {
+        border: 1px solid gray;
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: 600;
+        color: #bbc4cc;
+    }
+
+        .Attendance_employeeList table th {
+            text-align: center;
+            border: 1px solid gray;
+            border: 1px solid gray;
+            padding: 15px 1px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .Attendance_employeeList table td {
+            padding: 15px 0px;
+            text-align: center;
+            border: 1px solid gray;
+        }
+
+
+        .Attendance_employeeList table thead p {
+            writing-mode: vertical-lr;
+            vertical-align: middle;
+            line-height: 30px;
+        }
+
+.attendanceBtn {
+    font-size: 5px;
+    border: none;
+    background-color: transparent;
+    color: #55ce63;
+}
+
+    .attendanceBtn:disabled span {
+        color: gray;
+    }
+
+
+
+.Add_attendance {
+    background-color: #2e3439;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    padding: 20px;
+    width: 100%;
+    display: none;
+}
+
+    .Add_attendance select {
+        background-color: #2e3439;
+        border: 1px solid #47505f;
+        margin-top: 10px;
+    }
+
+    .Add_attendance input {
+        margin-top: 10px;
+        background-color: #2e3439;
+        border: 1px solid #47505f;
+    }
+
+.cancel_AddAttendance {
+    background-color: transparent;
+    color: firebrick;
+    border: 1px solid #47505f;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+    .cancel_AddAttendance:hover {
+        border: 1px solid #ff9b44;
+    }
+
+    .cancel_AddAttendance:focus {
+        outline: none;
+    }
+
+.AttendancePagination .paginationBtn {
+    background-color: #343a40;
+    border: 1px solid #47505f;
+    padding: 1px 6px;
+    color: ghostwhite;
+}
+
+    .AttendancePagination .paginationBtn:focus {
+        outline: none;
+    }
+
+    .AttendancePagination .paginationBtn:disabled {
+        color: dimgray;
+    }
+
+
+/*----------------------------------------------------Incentive view List-----------------------------------------------------*/
+
+.BonusPenalty_Box {
+    background-color: #2e3439;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    padding: 20px;
+    width: 100%;
+    display: none;
+}
+
+    .BonusPenalty_Box input {
+        margin-top: 10px;
+        background-color: #2e3439;
+        border: 1px solid #47505f;
+    }
+
+.cancel_Btn {
+    background-color: transparent;
+    color: firebrick;
+    border: 1px solid #47505f;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+    .cancel_Btn:hover {
+        border: 1px solid #ff9b44;
+    }
+
+    .cancel_Btn:focus {
+        outline: none;
+    }
+
+.bonusBtn {
+    background-color: transparent;
+    border: none;
+    color: green;
+    font-size: 20px;
+}
+
+    .bonusBtn:focus {
+        outline: none;
+    }
+
+
+.penaltyBtn {
+    background-color: transparent;
+    border: none;
+    color: brown;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+    .penaltyBtn:focus {
+        outline: none;
+    }

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Payroll>
+
+<table class="table text-white">
+    <thead class="thead-light">
+        <tr>
+            <td>Ad</td>
+            <td>Soyad</td>
+            <td>Ata adi</td>
+            <td>Tarix</td>
+            <td>Yekun maasi</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var item in Model)
+        {
+        <tr class="table-dark">
+            <td>@item.Employee.Name</td>
+            <td>@item.Employee.Surname</td>
+            <td>@item.Employee.FatherName</td>
+            <td>@item.Date</td>
+            <td>@item.TotalSalary</td>
+        </tr>
+        }
+    </tbody>
+</table>

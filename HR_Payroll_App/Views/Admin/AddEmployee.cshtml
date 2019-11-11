@@ -1,0 +1,189 @@
+﻿@model Employee_WorkPlaceModel
+
+<form asp-action="AddEmployee" asp-controller="Admin" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Employee.Name" class="control-label"></label>
+        <input asp-for="Employee.Name" class="form-control" />
+        <span asp-validation-for="Employee.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.Surname" class="control-label"></label>
+        <input asp-for="Employee.Surname" class="form-control" />
+        <span asp-validation-for="Employee.Surname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.FatherName" class="control-label"></label>
+        <input asp-for="Employee.FatherName" class="form-control" />
+        <span asp-validation-for="Employee.FatherName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.Birthday" class="control-label"></label>
+        <input asp-for="Employee.Birthday" class="form-control" />
+        <span asp-validation-for="Employee.Birthday" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.Address" class="control-label"></label>
+        <input asp-for="Employee.Address" class="form-control" />
+        <span asp-validation-for="Employee.Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.RegistrationAddress" class="control-label"></label>
+        <input asp-for="Employee.RegistrationAddress" class="form-control" />
+        <span asp-validation-for="Employee.RegistrationAddress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.PassportId" class="control-label"></label>
+        <input asp-for="Employee.PassportId" class="form-control" />
+        <span asp-validation-for="Employee.PassportId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.PassportExpireDate" class="control-label"></label>
+        <input asp-for="Employee.PassportExpireDate" class="form-control" />
+        <span asp-validation-for="Employee.PassportExpireDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.Education" class="control-label"></label>
+        <input asp-for="Employee.Education" class="form-control" />
+        <span asp-validation-for="Employee.Education" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.MaritalStatus" class="control-label"></label>
+        <select asp-for="Employee.MaritalStatus" class="form-control" asp-items="Html.GetEnumSelectList<MaritalStatus>()">
+            <option>Select...</option>
+        </select>
+        <span asp-validation-for="Employee.MaritalStatus" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.Gender" class="control-label"></label>
+        <select asp-for="Employee.Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()">
+            <option>Select...</option>
+        </select>
+        <span asp-validation-for="Employee.Gender" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee.Photo" class="control-label"></label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <select class="form-control" id="Select_holding" asp-items=" ViewBag.Holdings">
+            <option>Holdings</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="form-control" id="Select_Company">
+            <option>Companies</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="form-control" asp-for="WorkPlace.BranchId" id="Select_Branch">
+            <option>Branch</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="form-control" id="Select_department">
+            <option>Departments</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="form-control" asp-for="WorkPlace.PositionId" id="Select_position">
+            <option>Positions</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="WorkPlace.EntryDate" class="control-label"></label>
+        <input asp-for="WorkPlace.EntryDate" class="form-control form-control-sm workplace_Entry" />
+        <span asp-validation-for="WorkPlace.EntryDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="WorkPlace.ExitDate" class="control-label"></label>
+        <input asp-for="WorkPlace.ExitDate" class="form-control form-control-sm workplace_Exit" />
+        <span asp-validation-for="WorkPlace.ExitDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-danger" />
+    </div>
+</form>
+
+
+@section Scripts{ 
+    <script>
+
+        $("#Select_holding").on("change", function () {
+            if ($("#Select_holding").val() > 0) {
+                $.ajax
+                    (
+                    {
+                            url: "/Admin/GetSelect",
+                        type: "POST",
+                        data: { "Id": $("#Select_holding").val() },
+                        success: function (data) {
+                            $("#Select_Company").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $("#Select_Company").html("<option>Company</option>");
+
+            }
+        })
+        $("#Select_Company").on("change", function () {
+            if ($("#Select_Company").val() > 0) {
+                $.ajax
+                    (
+                    {
+                            url: "/Admin/GetSelect",
+                        type: "POST",
+                        data: { "companyId": $("#Select_Company").val() },
+                        success: function (data) {
+                            $("#Select_Branch").html(data);
+                        }
+                    }
+                    )
+                $.ajax
+                    (
+                    {
+                            url: "/Admin/GetSelect",
+                        type: "POST",
+                        data: { "company_Id": $("#Select_Company").val() },
+                        success: function (data) {
+                            $("#Select_department").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $("#Select_department").html("<option>Select department...</option>");
+
+            }
+        })
+        $("#Select_department").on("change", function () {
+            if ($("#Select_department").val() > 0) {
+                $.ajax
+                    (
+                    {
+                            url: "/Admin/GetSelect",
+                        type: "POST",
+                        data: { "departmentId": $("#Select_department").val() },
+                        success: function (data) {
+                            $("#Select_position").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $("#Select_position").html("<option>Select position...</option>");
+            }
+        })
+    </script>
+}
+

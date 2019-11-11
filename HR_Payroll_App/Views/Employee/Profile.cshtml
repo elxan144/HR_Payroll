@@ -1,0 +1,457 @@
+﻿@model Employee_OldWorkPlace_WorkPlace
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@*<input type="hidden" class="employeeId" value="@Model.Employee.Id" />*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="profile_employee">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="profile_image">
+                            <img src="/Images/@Model.Employee.Photo" />
+                        </div>
+                    </div>
+                    <div class="col-lg-5 text-left">
+                        <ul>
+                            <li>@Model.Employee.Name @Model.Employee.Surname @Model.Employee.FatherName  </li>
+                            <li>@Model.Employee.Gender </li>
+                            <li>@Model.Employee.MaritalStatus </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 text-left">
+                        <ul>
+                            <li>Birthday:</li>
+                            <li>Address: </li>
+                            <li>Registration Address: </li>
+                            <li>PassportId: </li>
+                            <li>PassportExpire Date: </li>
+                            <li>Education: </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        <ul>
+                            <li>@Model.Employee.Birthday </li>
+                            <li>@Model.Employee.Address </li>
+                            <li>@Model.Employee.RegistrationAddress </li>
+                            <li>@Model.Employee.PassportId </li>
+                            <li>@Model.Employee.PassportExpireDate </li>
+                            <li>@Model.Employee.Education </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="workplace">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <h5>WorkPlace</h5>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button class="createWorkPlace">
+                            <span class="fas fa-plus"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="workplace_List">
+                        <table class="table table-borderless text-white-50 text-left">
+                            <thead>
+                                <tr>
+                                    <th>Entry date</th>
+                                    <th>Exit Date</th>
+                                    <th>Branch</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.workPlace_Models)
+                                {
+                                <tr>
+                                    <td>@item.EntryDate</td>
+                                    <td>@item.ExitDate</td>
+                                    <td>@item.BranchName</td>
+                                    <td>@item.DepartmentName</td>
+                                    <td>@item.PositionNamme</td>
+                                    <td>                                       
+                                        <button class="edit_workplace" value="@item.Id" data-id="@item.Id"><span class="fas fa-pencil-alt"></span></button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="Workplace_create">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form asp-action="WorkPlace" asp-controller="Employee" method="post">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="GetWorkPlace.EmployeeId" value="@Model.Employee.Id" class="form-control employeId_hidden" />
+                                        </div>
+
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="form-group">
+                                            <select class="form-control Select_Branch" asp-for="GetWorkPlace.BranchId" asp-items="@Model.Branches">
+                                                <option value="">Branch</option>
+                                            </select>
+                                            <span asp-validation-for="GetWorkPlace.BranchId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control Select_department" asp-items="@Model.Departments">
+                                                <option value="">Departments</option>
+                                            </select>
+                                            <span asp-validation-for="GetWorkPlace.Position.DepartmentId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control Select_position" asp-for="GetWorkPlace.PositionId">
+                                                <option value="">Positions</option>
+                                            </select>
+                                            <span asp-validation-for="GetWorkPlace.PositionId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="GetWorkPlace.EntryDate" class="control-label"></label>
+                                            <input asp-for="GetWorkPlace.EntryDate" class="form-control form-control-sm workplace_Entry" />
+                                            <span asp-validation-for="GetWorkPlace.EntryDate" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="GetWorkPlace.ExitDate" class="control-label"></label>
+                                            <input asp-for="GetWorkPlace.ExitDate" class="form-control form-control-sm workplace_Exit" />
+                                            <span asp-validation-for="GetWorkPlace.ExitDate" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-success addWorkPlace" />
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Workplace_edit">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form asp-action="EditWorkPlace" asp-controller="Employee" method="post">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="GetWorkPlace.Id" class="form-control WorkPlaceId_hidden" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="GetWorkPlace.EmployeeId" class="form-control WorkPlace_employeeId_hidden"/>
+                                        </div>
+
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="form-group">
+                                            <input type="text" disabled class="branch_name" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control" asp-for="GetWorkPlace.BranchId" asp-items="@Model.Branches">
+                                                <option value="" >Branch</option>
+                                            </select>
+                                            <span asp-validation-for="GetWorkPlace.BranchId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" disabled class="department_name" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control Edit_Select_department" asp-items="@Model.Departments">
+                                                <option value="" >Departments</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" disabled class="position_name" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control Edit_Select_position" asp-for="GetWorkPlace.PositionId">
+                                                <option value="">Positions</option>
+                                            </select>
+                                            <span asp-validation-for="GetWorkPlace.PositionId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" disabled class="entry_date" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="GetWorkPlace.EntryDate" class="control-label"></label>
+                                            <input asp-for="GetWorkPlace.EntryDate" class="form-control form-control-sm workplace_Entry" />
+                                            <span asp-validation-for="GetWorkPlace.EntryDate" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="GetWorkPlace.ExitDate" class="control-label"></label>
+                                            <input asp-for="GetWorkPlace.ExitDate" class="form-control form-control-sm workplace_Exit" />
+                                            <span asp-validation-for="GetWorkPlace.ExitDate" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Edit" class="btn btn-danger" />
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="Oldworkplace">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <h5>Experience</h5>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button class="createOldWorkPlace">
+                            <span class="fas fa-plus"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="Oldworkplace_List">
+                        <table class="table table-borderless text-white-50 text-left">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Hire Date</th>
+                                    <th>Fire Date</th>
+                                    <th>Fire reason</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Employee.OldWorkPlaces)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.HireDate</td>
+                                        <td>@item.FireDate</td>
+                                        <td>@item.FireReason</td>
+                                        <td>Edit</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="OldWorkplace_create">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form asp-action="OldWorkPlace" asp-controller="Employee" method="post">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="GetOldWorkPlace.EmployeeId" value="@Model.Employee.Id" class="form-control employeId_hidden" />
+                                        </div>
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="GetOldWorkPlace.Name" class="control-label"></label>
+                                            <input asp-for="GetOldWorkPlace.Name" class="Oldworkplace_name form-control form-control-sm" />
+                                            <span asp-validation-for="GetOldWorkPlace.Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="GetOldWorkPlace.HireDate" class="control-label"></label>
+                                            <input asp-for="GetOldWorkPlace.HireDate" class="Oldworkplace_HireDate form-control form-control-sm" />
+                                            <span asp-validation-for="GetOldWorkPlace.HireDate" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="GetOldWorkPlace.FireDate" class="control-label"></label>
+                                            <input asp-for="GetOldWorkPlace.FireDate" class="Oldworkplace_FireDate form-control form-control-sm" />
+                                            <span asp-validation-for="GetOldWorkPlace.FireDate" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="GetOldWorkPlace.FireReason" class="control-label"></label>
+                                            <input asp-for="GetOldWorkPlace.FireReason" class="Oldworkplace_FireReason form-control form-control-sm" />
+                                            <span asp-validation-for="GetOldWorkPlace.FireReason" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-success addOldWorkPlace" />
+                                        </div>
+                                    </form>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(".createOldWorkPlace").click(function () {
+            $(".OldWorkplace_create").slideToggle("slow");
+        });
+
+        $(".createWorkPlace").click(function () {
+            $(".Workplace_create").slideToggle("slow");
+        });
+
+        $(".createWorkPlace").click(function () {
+            $(".Workplace_edit").slideUp("slow");
+        });
+
+        $(".edit_workplace").click(function () {
+            $(".Workplace_edit").slideToggle("slow");
+        });
+
+        $(".edit_workplace").click(function () {
+            $(".Workplace_create").slideUp("slow");
+        });
+
+        $(".edit_workplace").click(function () {
+                $.ajax
+                    (
+                    {
+                            url: "/Employee/Get_EditWorkPlace",
+                        type: "POST",
+                            data: { "id": $(this).val() },
+                            success: function (data) {
+                                $(".branch_name").val(data.BranchName);
+                                $(".department_name").val(data.DepartmentName);
+                                $(".position_name").val(data.PositionName);
+                                $(".workplace_Entry").val(data.Entry);
+                                $(".WorkPlaceId_hidden").val(data.WorkPlaceId);
+                                $(".WorkPlace_employeeId_hidden").val(data.EmployeeId);                                
+                        }
+                    }
+                    )
+        })
+
+
+
+
+
+        //$(".addWorkPlace").click(function (e) {
+        //    e.preventDefault();
+
+        //    var GetWorkPlace = {
+        //        Entry: $(".workplace_Entry").val(),
+        //        Exit: $(".workplace_Exit").val(),
+        //        PositionId: $("#Select_position").val(),
+        //        BranchId: $("#Select_Branch").val(),
+        //        EmployeeId: $(".employeId_hidden").val()
+        //    }
+
+        //    var model = {
+        //        "GetWorkPlace": GetWorkPlace,
+        //    }
+
+        //    $.ajax
+        //        (
+        //        {
+        //            url: "/Employee/WorkPlace",
+        //            type: "POST",
+        //            data: model,
+        //            datatype: "json",
+        //            success: function (data) {
+        //                $(document.body).html(data);
+        //            }
+        //        }
+        //        )
+        //})
+
+        //$(".addOldWorkPlace").click(function (e) {
+        //    e.preventDefault();
+
+        //    var GetOldWorkPlace = {
+        //        Name: $(".Oldworkplace_name").val(),
+        //        HireDate: $(".Oldworkplace_HireDate").val(),
+        //        FireDate: $(".Oldworkplace_FireDate").val(),
+        //        FireReason: $(".Oldworkplace_FireReason").val(),
+        //        EmployeeId: $(".employeId_hidden").val()
+        //    }
+
+        //    var model = {
+        //        "GetOldWorkPlace": GetOldWorkPlace,
+        //    }
+
+        //    $.ajax
+        //        (
+        //        {
+        //            url: "/Employee/OldWorkPlace",
+        //            type: "POST",
+        //            data: model,
+        //            datatype: "json",
+        //            success: function (data) {
+        //                $(document.body).html(data);
+        //            }
+        //        }
+        //        )
+        //})
+
+        $(".Edit_Select_department").on("change", function () {
+            if ($(".Edit_Select_department").val() > 0) {
+                $.ajax
+                    (
+                    {
+                        url: "/Employee/GetSelect",
+                        type: "POST",
+                            data: { "departmentId": $(".Edit_Select_department").val() },
+                        success: function (data) {
+                            $(".Edit_Select_position").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $(".Edit_Select_position").html('<option value="">Select position...</option>');
+            }
+        })
+
+        $(".Select_department").on("change", function () {
+            if ($(".Select_department").val() > 0) {
+                $.ajax
+                    (
+                    {
+                        url: "/Employee/GetSelect",
+                        type: "POST",
+                        data: { "departmentId": $(".Select_department").val() },
+                        success: function (data) {
+                            $(".Select_position").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $(".Select_position").html('<option value="">Select position...</option>');
+            }
+        })
+
+    </script>
+
+}
+
+

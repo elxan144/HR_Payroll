@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Company>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+
+        </div>
+        <div class="col-lg-6">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var company in Model)
+                    {
+                        <tr class="table-dark">
+                            <td>@company.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <a style="text-decoration:none; color:white; padding:5px 15px; border:1px solid gray; border-radius:10px; background-color:#ff9b44;" asp-action="Create" asp-controller="Company"> <span class="fas fa-plus"></span>  Company elave et</a>
+        </div>
+    </div>
+</div>
+
+

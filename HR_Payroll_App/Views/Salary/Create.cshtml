@@ -1,0 +1,102 @@
+﻿@model Salary
+
+<div class="col-md-6">
+    <form asp-action="Create" asp-controller="Salary" method="post">
+
+        <div class="form-group">
+            <select class="alert-danger form-control" id="Select_holding" asp-items="ViewBag.Holdings">
+                <option>Holdings</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="alert-danger form-control" asp-for="CompanyId" name="CompanyId" id="Select_company">
+                <option>Company</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="alert-danger form-control" name="DepartmentId" id="Select_department">
+                <option>Department</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <select class="alert-danger form-control" asp-for="PositionId" name="PositionId" id="Select_position">
+                <option>Position</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="number" asp-for="Amount" class="form-control" />
+        </div>
+
+        <input type="submit" class="btn btn-danger" />
+
+    </form>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $("#Select_holding").on("change",function()
+        {
+            if ($("#Select_holding").val()>0) {
+                $.ajax
+                    (
+                    {
+                            url: "/Salary/GetSelect",
+                        type: "POST",
+                        data: { "Id": $("#Select_holding").val() },
+                            success: function (data) {
+                                $("#Select_company").html(data);
+                        }
+                    }
+                    )
+            }
+            else
+            {
+                $("#Select_company").html("<option>Company</option>");
+
+            }
+        })
+        $("#Select_company").on("change", function () {
+            if ($("#Select_company").val() > 0) {
+                $.ajax
+                    (
+                    {
+                            url: "/Salary/GetSelect",
+                        type: "POST",
+                            data: { "companyId": $("#Select_company").val() },
+                        success: function (data) {
+                            $("#Select_department").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $("#Select_department").html("<option>Select department...</option>");
+
+            }
+        })
+        $("#Select_department").on("change", function () {
+            if ($("#Select_department").val() > 0) {
+                $.ajax
+                    (
+                    {
+                            url: "/Salary/GetSelect",
+                        type: "POST",
+                            data: { "departmentId": $("#Select_department").val() },
+                        success: function (data) {
+                            $("#Select_position").html(data);
+                        }
+                    }
+                    )
+            }
+            else {
+                $("#Select_position").html("<option>Select position...</option>");
+            }
+        })
+
+    </script>
+}
+

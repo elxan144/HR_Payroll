@@ -1,0 +1,30 @@
+﻿@model HR_Payroll_App.Models.OldWorkPlace
+
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="HireDate" class="control-label"></label>
+            <input asp-for="HireDate" class="form-control" />
+            <span asp-validation-for="HireDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FireDate" class="control-label"></label>
+            <input asp-for="FireDate" class="form-control" />
+            <span asp-validation-for="FireDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FireReason" class="control-label"></label>
+            <input asp-for="FireReason" class="form-control" />
+            <span asp-validation-for="FireReason" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>

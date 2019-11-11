@@ -1,0 +1,247 @@
+﻿@model EmployeeAttendance_Model
+
+<div class="container">
+    <div class="search_employe">
+            <div class="row">
+                <div class="col-lg-3">
+                    <input type="text" class="NameSearch"/>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-control MonthSelect" asp-items="Html.GetEnumSelectList<Months>()" name="Month"></select>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-control YearSelect" name="Year" >
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <input type="submit" class="btnSearch" value="Axtar" />
+                </div>
+            </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="Attendance_employeeList mb-3 mt-5">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Isci</th>
+
+                            @foreach (var item in Model.Days)
+                            {
+                                <th><p>@Model.Month/@item/@Model.Year</p></th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EmployeeWorkplacePositionFullModel)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Ename @item.Surname
+                                    @item.BranchName @item.PositionName
+                                </td>
+
+                                @for (int i = 1; i <= Model.Days.Count(); i++)
+                                {
+                                <td>
+
+                                  
+                                        @foreach (var it in item.Attendances)
+                                        {
+                                            if (it.Date.ToString() == $"{Model.Month}/{i}/{Model.Year} 12:00:00 AM")
+                                            {
+                                                <span class="fas fa-times fa-2x" style="color:#f62d51;"></span>
+                                            }                                         
+                                        }
+                                  
+                                        @if (Model.Month == DateTime.Now.Month && Model.Year == DateTime.Now.Year)
+                                        {
+                                            <button class="attendanceBtn" value="@Model.Year-@Model.Month-@i" data-EmployeeId="@item.E_id"><span class="fas fa-pencil-alt fa-3x"></span> </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="attendanceBtn" value="@Model.Year-@Model.Month-@i" disabled data-EmployeeId="@item.E_id"><span class="fas fa-pencil-alt fa-3x"></span> </button>
+                                        }
+                               
+                                </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-end">
+            <div class="AttendancePagination">
+                @{
+                    var PrevPage = !Model.Pagination.HasPreviousPage ? "disabled" : "";
+                    var NextPage = !Model.Pagination.NextPreviousPage ? "disabled" : "";
+                }
+
+                <button class="paginationBtn" @PrevPage value="@(Model.Pagination.PageIndex-1)"> <i class="fas fa-long-arrow-alt-left"></i> </button>
+
+                @for (int i = 1; i <= Model.Pagination.TotalPage; i++)
+                {
+                    <button class="paginationBtn" value="@i"> @i </button>
+                }
+                <button class="paginationBtn" @NextPage value="@(Model.Pagination.PageIndex+1)"> <i class="fas fa-long-arrow-alt-right"></i> </button>
+
+                <input type="hidden" class="PageIndex" value="@Model.Pagination.PageIndex" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="Add_attendance mt-5">
+                    <div class="col-md-12 text-right mb-3">
+                        <button class="cancel_AddAttendance">
+                            <i class="fas fa-times "></i>
+                        </button>
+                    </div>
+
+                    <div class="row  d-flex justify-content-center">
+                        <div class="col-lg-12">
+                            <form asp-action="Create" asp-controller="Attendance" method="post">
+
+                                <input type="hidden" class="employeeID" asp-for="Attendance.EmployeeId" />
+
+                                <div class="form-group">
+                                    <label asp-for="Attendance.Permission">Uzrlu ve ya Uzrsuz:</label>
+                                    <select class="form-control Edit_Select_department" asp-for="Attendance.Permission">
+                                        <option value="true">Uzrlu</option>
+                                        <option value="false">Uzrsuz</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Attendance.Date" class="control-label">Tarix:</label>
+                                    <input asp-for="Attendance.Date" class="form-control datetimeee" />
+                                    <span asp-validation-for="Attendance.Date"  class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Attendance.Reason" class="control-label">Sebeb:</label>
+                                    <input asp-for="Attendance.Reason" class="form-control" />
+                                    <span asp-validation-for="Attendance.Reason" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Elave et" class="btn btn-danger" />
+                                </div>
+                            </form>
+                        </div>
+                </div>            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var ss = new Date(Date.now());
+            $(".MonthSelect option").each(function () {
+                if ($(this).val() == ss.getMonth()+1)
+                {
+                    $(this).attr('selected', true);
+                }
+            });
+        });
+
+
+        $(".attendanceBtn").click(function () {
+            var mydate = new Date($(this).val());
+         
+            if ((mydate.getMonth() + 1) < 10 && mydate.getDate() < 10)
+            {
+                var today = mydate.getFullYear() + '-' +"0" + (mydate.getMonth() + 1) + '-' +"0"+mydate.getDate();
+            }
+            if ((mydate.getMonth() + 1) >= 10 && mydate.getDate() >= 10) {
+                var today = mydate.getFullYear() + '-' +(mydate.getMonth() + 1) + '-' + mydate.getDate();
+            }
+            if ((mydate.getMonth() + 1) >= 10 && mydate.getDate() < 10) {
+                var today = mydate.getFullYear() + '-' +(mydate.getMonth() + 1) + '-' + "0" + mydate.getDate();
+            }
+            if ((mydate.getMonth() + 1) < 10 && mydate.getDate() >= 10) {
+                var today = mydate.getFullYear() + '-' + "0" + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+            }
+
+            $(".datetimeee").val(today);
+
+            $(".employeeID").val($(this).data('employeeid'));
+
+            $(".Add_attendance").show();
+        })
+
+        $(".cancel_AddAttendance").click(function () {
+            $(".Add_attendance").hide();
+        })
+
+    $(".paginationBtn").click(function () {
+            var Model = {
+                    "PageIndex":$(this).val(),
+                    "Month": $(".MonthSelect").val(),
+                    "Year": $(".YearSelect").val()
+        };
+
+            $.ajax
+                (
+                {
+                    url: "/Attendance/List",
+                        type: "POST",
+                        data: Model,
+                        success: function (data) {
+
+                            $(document.body).html(data);
+                    }
+                }
+                )
+        })
+
+    $(".btnSearch").click(function () {
+
+                    var Model = {
+                     "Name": $(".NameSearch").val(),
+                    "PageIndex": $(".PageIndex").val(),
+                    "Month": $(".MonthSelect").val(),
+                    "Year": $(".YearSelect").val()
+                    };
+
+            $.ajax
+                (
+                {
+                    url: "/Attendance/List",
+                        type: "POST",
+                        data: Model,
+                    success: function (data) {
+                        $(document.body).html(data);
+                    }
+                }
+                )
+        })
+
+
+
+</script>
+
+}

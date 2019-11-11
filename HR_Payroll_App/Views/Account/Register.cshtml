@@ -1,0 +1,53 @@
+﻿@model RegisterModel
+
+
+<form asp-action="Register" asp-controller="Account" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <select class="form-control" id="Select_Employee" asp-for="EmployeeId" asp-items="Model.Employees">
+                <option>Employees</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control form-control-sm" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="UserName" class="control-label"></label>
+            <input asp-for="UserName" class="form-control form-control-sm" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <select class="form-control" id="Select_role" asp-for="Role" asp-items="ViewBag.Roles">
+                <option>Roles</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control form-control-sm" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-success" />
+    </div>
+</form>
+
+

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Holding>
+
+<form asp-action="Create" asp-controller="Company" method="post">
+
+    @{
+
+        List<SelectListItem> selectLists = new List<SelectListItem>();
+
+        foreach (Holding item in Model)
+        {
+            SelectListItem selectListItem = new SelectListItem() { Value = item.Id.ToString(), Text = item.Name };
+            selectLists.Add(selectListItem);
+        };
+    }
+
+    <select name="HoldingId" asp-items="selectLists">
+        <option>Holding</option>
+    </select>
+
+    <input type="text" name="Name" />
+
+    <input type="submit" class="btn btn-dark" value="Add" />
+</form>
+
+

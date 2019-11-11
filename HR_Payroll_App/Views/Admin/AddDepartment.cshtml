@@ -1,0 +1,56 @@
+﻿@model HR_Payroll_App.Models.Holding
+
+@{
+    ViewData["Title"] = "AddDepartment";
+}
+
+<h2>AddDepartment</h2>
+
+
+<form asp-action="AddDepartment" method="post">
+    <select class="alert-danger" id="Select_holding" asp-items="ViewBag.Holdings">
+        <option>Holdings</option>
+    </select>
+
+    <div class="form-group">
+        <select class="alert-danger form-control" name="CompanyId" id="Select_company">
+            <option>Company</option>
+        </select>
+    </div>
+
+    <select class="alert-danger" name="DepartmentId" id="Select_department" asp-items="ViewBag.Departments">
+        <option>Department</option>
+    </select>
+
+    <input type="submit" class="btn btn-danger"/>
+
+</form>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $("#Select_holding").on("change",function()
+        {
+            if ($("#Select_holding").val() > 0)
+            {
+                $.ajax
+                    (
+                    {
+                        url: "/Admin/AddDepartment",
+                        type: "POST",
+                        data: { "Id": $("#Select_holding").val() },
+                        success: function (data) {
+                            $("#Select_company").html(data);
+                        }
+                    }
+                    )
+            }   
+            else
+            {
+                $("#Select_company").html("<option>Select company...</option>");
+            }
+        })
+    </script>
+}
+

@@ -1,0 +1,310 @@
+﻿@model Employee_Incentive_Model
+
+<div class="container">
+    <div class="search_employe">
+        <div class="row">
+            <div class="col-lg-3">
+                <input type="text" class="NameSearch" />
+            </div>
+            <div class="col-lg-3">
+                <select class="form-control MonthSelect" asp-items="Html.GetEnumSelectList<Months>()" name="Month"></select>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-control YearSelect" name="Year">
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <input type="submit" class="btnSearch" value="Axtar" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="Attendance_employeeList mb-3 mt-5">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Isci</th>
+
+                            @foreach (var item in Model.Days)
+                            {
+                                <th><p>@Model.Month/@item/@Model.Year</p></th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EmployeeWorkplacePositionFullModel)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Ename @item.Surname
+                                     @item.PositionName
+                                </td>
+
+                                @for (int i = 1; i <= Model.Days.Count(); i++)
+                                {
+                                <td>
+
+                                    @foreach (var it in item.Bonuses)
+                                    {
+                                        if (it.Date.ToString() == $"{Model.Month}/{i}/{Model.Year} 12:00:00 AM")
+                                        {
+                                            <span style="color:lightgreen;"> @it.Amount </span>
+                                        }
+                                    }
+
+                                    <button value="@Model.Month-@i-@Model.Year" data-employeeid="@item.E_id" class="bonusBtn"><span class="far fa-thumbs-up"></span></button>
+                                    <button value="@Model.Month-@i-@Model.Year" data-employeeid="@item.E_id" class="penaltyBtn"><span class="far fa-thumbs-down"></span></button>
+
+                                    @foreach (var it in item.Penalties)
+                                    {
+                                        if (it.Date.ToString() == $"{Model.Month}/{i}/{Model.Year} 12:00:00 AM")
+                                        {
+                                            <span style="color:#d60707;"> @it.Amount </span>
+                                        }
+                                    }
+                                </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-end">
+            <div class="AttendancePagination">
+                @{
+                    var PrevPage = !Model.Pagination.HasPreviousPage ? "disabled" : "";
+                    var NextPage = !Model.Pagination.NextPreviousPage ? "disabled" : "";
+                }
+
+                <button class="paginationBtn" @PrevPage value="@(Model.Pagination.PageIndex-1)"> <i class="fas fa-long-arrow-alt-left"></i> </button>
+
+                @for (int i = 1; i <= Model.Pagination.TotalPage; i++)
+                {
+                    <button class="paginationBtn" value="@i"> @i </button>
+                }
+                <button class="paginationBtn" @NextPage value="@(Model.Pagination.PageIndex+1)"> <i class="fas fa-long-arrow-alt-right"></i> </button>
+
+                <input type="hidden" class="PageIndex" value="@Model.Pagination.PageIndex" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="BonusPenalty_Box Add_Bonus mt-5">
+                <div class="col-md-12 text-right mb-3">
+                    <button class="cancel_Btn bonusCancel">
+                        <i class="fas fa-times "></i>
+                    </button>
+                </div>
+
+                <div class="row  d-flex justify-content-center">
+                    <div class="col-lg-12">
+                        <form asp-action="AddBonus" asp-controller="Incentive" method="post">
+
+                            <input type="hidden" class="employeeID" asp-for="BonusModel.EmployeeId" />
+
+                            <div class="form-group">
+                                <label asp-for="BonusModel.Amount" class="control-label">Bonus meblegi:</label>
+                                <input asp-for="BonusModel.Amount" class="form-control" />
+                                <span asp-validation-for="BonusModel.Amount" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="BonusModel.Date" class="control-label">Tarix:</label>
+                                <input asp-for="BonusModel.Date" class="form-control datetimeBonus" />
+                                <span asp-validation-for="BonusModel.Date" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="BonusModel.Reason" class="control-label">Sebeb:</label>
+                                <input asp-for="BonusModel.Reason" class="form-control" />
+                                <span asp-validation-for="BonusModel.Reason" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Elave et" class="btn btn-danger" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="BonusPenalty_Box Add_Penalty mt-5">
+                <div class="col-md-12 text-right mb-3">
+                    <button class="cancel_Btn penaltyCancel">
+                        <i class="fas fa-times "></i>
+                    </button>
+                </div>
+                <div class="row  d-flex justify-content-center">
+                    <div class="col-lg-12">
+                        <form asp-action="AddPenalty" asp-controller="Incentive" method="post">
+
+                            <input type="hidden" class="employeeID" asp-for="PenaltyModel.EmployeeId" />
+                            <div class="form-group">
+                                <label asp-for="PenaltyModel.Amount" class="control-label">Cerimenin meblegi:</label>
+                                <input asp-for="PenaltyModel.Amount" class="form-control" />
+                                <span asp-validation-for="PenaltyModel.Amount" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PenaltyModel.Date" class="control-label">Tarix:</label>
+                                <input asp-for="PenaltyModel.Date" class="form-control datetimePenalty" />
+                                <span asp-validation-for="PenaltyModel.Date" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PenaltyModel.Reason" class="control-label">Sebeb:</label>
+                                <input asp-for="PenaltyModel.Reason" class="form-control" />
+                                <span asp-validation-for="PenaltyModel.Reason" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Elave et" class="btn btn-danger" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var ss = new Date(Date.now());
+            $(".MonthSelect option").each(function () {
+                if ($(this).val() == ss.getMonth()+1)
+                {
+                    $(this).attr('selected', true);
+                }
+            });
+        });
+
+        function DateAdd_Input(mydate) {
+            if ((mydate.getMonth() + 1) < 10 && mydate.getDate() < 10) {
+                var today = mydate.getFullYear() + '-' + "0" + (mydate.getMonth() + 1) + '-' + "0" + mydate.getDate();
+            }
+            if ((mydate.getMonth() + 1) >= 10 && mydate.getDate() >= 10) {
+                var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+            }
+            if ((mydate.getMonth() + 1) >= 10 && mydate.getDate() < 10) {
+                var today = mydate.getFullYear() + '-' + (mydate.getMonth() + 1) + '-' + "0" + mydate.getDate();
+            }
+            if ((mydate.getMonth() + 1) < 10 && mydate.getDate() >= 10) {
+                var today = mydate.getFullYear() + '-' + "0" + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+            }
+            return today;
+        }
+
+
+
+        $(".bonusBtn").click(function () {
+
+            var mydate = new Date($(this).val());
+
+            var today = DateAdd_Input(mydate);
+            
+            $(".datetimeBonus").val(today);
+
+            $(".employeeID").val($(this).data('employeeid'));
+
+            $(".Add_Bonus").fadeIn("slow");
+        })
+
+        $(".bonusCancel").click(function () {
+            $(".Add_Bonus").fadeOut("slow");
+        })
+
+        $(".penaltyBtn").click(function () {
+
+            var mydate = new Date($(this).val());
+
+            var today = DateAdd_Input(mydate);
+
+            $(".datetimePenalty").val(today);
+
+            $(".employeeID").val($(this).data('employeeid'));
+
+            $(".Add_Penalty").fadeIn("slow");
+        })
+
+        $(".penaltyCancel").click(function () {
+            $(".Add_Penalty").fadeOut("slow");
+        })
+
+    $(".paginationBtn").click(function () {
+            var Model = {
+                    "PageIndex":$(this).val(),
+                    "Month": $(".MonthSelect").val(),
+                    "Year": $(".YearSelect").val()
+        };
+
+            $.ajax
+                (
+                {
+                    url: "/Incentive/List",
+                        type: "POST",
+                        data: Model,
+                        success: function (data) {
+
+                            $(document.body).html(data);
+                    }
+                }
+                )
+        })
+
+    $(".btnSearch").click(function () {
+
+                    var Model = {
+                     "Name": $(".NameSearch").val(),
+                    "PageIndex": $(".PageIndex").val(),
+                    "Month": $(".MonthSelect").val(),
+                    "Year": $(".YearSelect").val()
+                    };
+
+            $.ajax
+                (
+                {
+                        url: "/Incentive/List",
+                        type: "POST",
+                        data: Model,
+                    success: function (data) {
+                        $(document.body).html(data);
+                    }
+                }
+                )
+        })
+
+
+
+    </script>
+
+}

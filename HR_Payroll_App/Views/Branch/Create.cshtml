@@ -1,0 +1,27 @@
+﻿@model HR_Payroll_App.Models.Branch
+
+
+<form asp-action="Create" asp-controller="Branch" method="post">
+
+    @{
+
+        List<SelectListItem> selectLists = new List<SelectListItem>();
+
+        foreach (Company item in ViewBag.companies)
+        {
+            SelectListItem selectListItem = new SelectListItem() { Value = item.Id.ToString(), Text = item.Name };
+            selectLists.Add(selectListItem);
+        };
+    }
+
+    <select name="CompanyId" asp-items="selectLists">
+        <option>Company</option>
+    </select>
+
+    <input type="text" name="Name" />
+
+    <input type="checkbox" asp-for="IsHead" />
+
+    <input type="submit" class="btn btn-dark" value="Add" />
+</form>
+

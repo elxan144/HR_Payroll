@@ -1,0 +1,170 @@
+﻿@model EmployeeModel
+
+<div class="container">
+    <div class="employee_list_add">
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <h1>Employee</h1>
+            </div>
+            <div class="col-lg-6 text-right">
+                <form asp-action="Create" asp-controller="Employee" method="get">
+                    <input type="submit" class="addEmployee" value="Add employee">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="search_employe">
+        <div class="row">
+            <div class="col-lg-3">
+                <input type="text" />
+            </div>
+            <div class="col-lg-3">
+                <input type="text" />
+            </div>
+            <div class="col-lg-3">
+                <input type="text" />
+            </div>
+            <div class="col-lg-3">
+                <input type="submit" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Employees)
+        {
+            <div class="col-lg-3">
+                <div class="d-flex flex-column align-items-center justify-content-center employee">
+                    <div class="employee_image">
+                        <img src="/Images/@item.Photo">
+                    </div>
+                    <div class="employee_Name">
+                        <a asp-action="Profile" asp-controller="Employee" asp-route-id="@item.Id">@item.Name @item.Surname</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-end">
+            <div class="AttendancePagination">
+                @{
+                    var PrevPage = !Model.Pagination.HasPreviousPage ? "disabled" : "";
+                    var NextPage = !Model.Pagination.NextPreviousPage ? "disabled" : "";
+                }
+
+                <button class="paginationBtn" @PrevPage value="@(Model.Pagination.PageIndex-1)"> <i class="fas fa-long-arrow-alt-left"></i> </button>
+
+                @for (int i = 1; i <= Model.Pagination.TotalPage; i++)
+                {
+                    <button class="paginationBtn" value="@i"> @i </button>
+                }
+                <button class="paginationBtn" @NextPage value="@(Model.Pagination.PageIndex+1)"> <i class="fas fa-long-arrow-alt-right"></i> </button>
+
+                <input type="hidden" class="PageIndex" value="@Model.Pagination.PageIndex" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        //$(document).ready(function () {
+
+        //    var ss = new Date(Date.now());
+        //    $(".MonthSelect option").each(function () {
+        //        if ($(this).val() == ss.getMonth()+1)
+        //        {
+        //            $(this).attr('selected', true);
+        //        }
+        //    });
+        //});
+
+
+        //$(".attendanceBtn").click(function () {
+        //    var mydate = new Date($(this).val());
+
+        //    if ((mydate.getMonth() + 1) < 10 && mydate.getDate() < 10)
+        //    {
+        //        var today = mydate.getFullYear() + '-' +"0" + (mydate.getMonth() + 1) + '-' +"0"+mydate.getDate();
+        //    }
+        //    if ((mydate.getMonth() + 1) >= 10 && mydate.getDate() >= 10) {
+        //        var today = mydate.getFullYear() + '-' +(mydate.getMonth() + 1) + '-' + mydate.getDate();
+        //    }
+        //    if ((mydate.getMonth() + 1) >= 10 && mydate.getDate() < 10) {
+        //        var today = mydate.getFullYear() + '-' +(mydate.getMonth() + 1) + '-' + "0" + mydate.getDate();
+        //    }
+        //    if ((mydate.getMonth() + 1) < 10 && mydate.getDate() >= 10) {
+        //        var today = mydate.getFullYear() + '-' + "0" + (mydate.getMonth() + 1) + '-' + mydate.getDate();
+        //    }
+
+        //    $(".datetimeee").val(today);
+
+        //    $(".employeeID").val($(this).data('employeeid'));
+
+        //    $(".Add_attendance").show();
+        //})
+
+        //$(".cancel_AddAttendance").click(function () {
+        //    $(".Add_attendance").hide();
+        //})
+
+    $(".paginationBtn").click(function () {
+            var Model = {
+                    "PageIndex":$(this).val()
+        };
+
+            $.ajax
+                (
+                {
+                    url: "/Employee/List",
+                        type: "POST",
+                        data: Model,
+                        success: function (data) {
+                            $(document.body).html(data);
+                    }
+                }
+                )
+        })
+
+    //$(".btnSearch").click(function () {
+
+    //                var Model = {
+    //                 "Name": $(".NameSearch").val(),
+    //                "PageIndex": $(".PageIndex").val(),
+    //                "Month": $(".MonthSelect").val(),
+    //                "Year": $(".YearSelect").val()
+    //                };
+
+    //        $.ajax
+    //            (
+    //            {
+    //                url: "/Attendance/List",
+    //                    type: "POST",
+    //                    data: Model,
+    //                success: function (data) {
+    //                    $(document.body).html(data);
+    //                }
+    //            }
+    //            )
+    //    })
+
+
+
+    </script>
+
+}
+
+
+
+
